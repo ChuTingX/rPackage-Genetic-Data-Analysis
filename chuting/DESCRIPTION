@@ -1,0 +1,23 @@
+Package: chuting
+Title: Tools for Mean Coverage Extraction and Best Bin Selection
+Version: 0.1.0
+Authors@R: 
+    person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
+Description: The 'chuting' package provides functions to compute mean coverage 
+    signals for genomic bins and to identify the bin that best correlates with 
+    gene expression. By combining coverage data from Rle objects and 
+    user-supplied expression values, it enables straightforward exploration of 
+    localized epigenomic signals and their relationship to transcriptional activity.
+License: MIT
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports:
+    GenomicRanges,
+    IRanges,
+    S4Vectors,
+    stats
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

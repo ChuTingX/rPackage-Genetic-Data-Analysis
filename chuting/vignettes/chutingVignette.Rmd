@@ -1,0 +1,56 @@
+---
+title: "chutingVignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{chutingVignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+# Load the package containing the two functions: mean_bin_signal() and find_best_bin_fixed_pc()
+library(chuting)
+
+# Load the sample data included in the package:
+# bins_list: A list of GRanges objects, each representing bins for one gene.
+# example_cov: A coverage object (list of Rle) keyed by chromosome.
+# expression: A numeric vector of expression values, one per gene.
+data("bins_list")
+data("example_cov")
+data("expression")
+
+# Let's check how many genes we have:
+length(bins_list)    # Number of genes in the dataset.
+
+# Inspect the first few expression values to understand the range and data:
+head(expression)      # First few expression values for the genes.
+
+# Choose one gene (the first gene) to demonstrate mean_bin_signal():
+gene1_bins <- bins_list[[1]]
+
+# Compute the mean coverage for each bin of this first gene:
+# mean_bin_signal takes the bins (GRanges) and the coverage (example_cov) and returns mean coverage per bin.
+gene1_signals <- mean_bin_signal(gene1_bins, example_cov)
+gene1_signals  # Display the mean signals
+
+# Now use find_best_bin_fixed_pc() to identify which bin is best correlated with expression across all genes:
+# This function:
+# 1. Computes mean signals for all genes using mean_bin_signal().
+# 2. Adds a fixed pseudocount (0.1) and applies log2 transformation.
+# 3. Correlates each bin's coverage profile with the expression vector.
+# 4. Returns the bin with the highest absolute correlation.
+result <- find_best_bin_fixed_pc(example_cov, bins_list, expression)
+
+# The result is a list containing:
+# $pseudocount: The fixed pseudocount used (0.1).
+# $best_bin: The index of the best-correlated bin.
+# $correlations: A vector of correlation values for each bin.
+result
+```
