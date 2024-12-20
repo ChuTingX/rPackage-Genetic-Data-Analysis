@@ -15,22 +15,20 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-# Load the package containing the two functions: mean_bin_signal() and find_best_bin_fixed_pc()
 library(chuting)
 
-# Load the sample data included in the package:
-# bins_list: A list of GRanges objects, each representing bins for one gene.
-# example_cov: A coverage object (list of Rle) keyed by chromosome.
-# expression: A numeric vector of expression values, one per gene.
-data("bins_list")
-data("example_cov")
-data("expression")
+# Generate example data (bins_list, example_cov, expression) at runtime
+example_data <- generate_example_data()
+
+bins_list <- example_data$bins_list
+example_cov <- example_data$example_cov
+expression <- example_data$expression
 
 # Let's check how many genes we have:
-length(bins_list)    # Number of genes in the dataset.
+length(bins_list)    # Number of genes in the dataset
 
 # Inspect the first few expression values to understand the range and data:
-head(expression)      # First few expression values for the genes.
+head(expression)      # First few expression values for the genes
 
 # Choose one gene (the first gene) to demonstrate mean_bin_signal():
 gene1_bins <- bins_list[[1]]
